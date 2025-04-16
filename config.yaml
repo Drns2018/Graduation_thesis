@@ -1,0 +1,57 @@
+# ==================== Data Configuration ====================
+data:
+  path: "dataset/marketing_campaign.csv"  # Data path
+  encoding: "utf-8"                      # File encoding
+  separator: "\t"                        # Separator
+
+# ==================== Customer Segmentation Configuration ====================
+segmentation:
+  active: true                           # Enable this module
+  methods: ["kmeans"]                    # Options: ["kmeans", "gmm", "hdbscan"]
+  n_clusters: 4                          # Number of clusters
+  features:                              # Features used
+    - "Income"
+    - "Recency"
+    - "Total_Spending"
+    - "Family_Size"
+    - "Activity_Ratio"
+  metrics:                               # Evaluation metrics
+    - "silhouette"
+    - "cluster_balance"
+
+# ==================== Product Analysis Configuration ====================
+products:
+  target_products:                       # Products to analyze
+    - "MntWines"
+    - "MntFruits"
+    - "MntMeatProducts"
+    - "MntFishProducts"
+  analysis_types:                        # Analysis methods
+    - "total_demand"
+    - "segment_comparison"
+    - "channel_distribution"
+  target_segments: "all" 
+  comparison_metrics: ["mean_demand", "demand_variation", "segment_share"] 
+  highlight_thresholds:  
+    high_demand: 1.5
+    low_demand: 0.5
+
+# ==================== Demand Forecasting Configuration ====================
+forecasting:
+  product: "MntWines"                    # Target product for forecasting
+  periods: 6                             # Number of months to forecast
+  test_size: 12                          # Number of months for validation
+  model: "prophet"                       # Options: ["prophet", "holt-winters"]
+  seasonality: "multiplicative"          # Seasonality mode
+
+# ==================== Report Configuration ====================
+DASHSCOPE_API_KEY = sk-275ca2c9f92e4855a220a829b2c073c4 #  API key
+report:
+  language: "en"                         # Report language
+  output_dir: "output"                   # Output directory
+  include:                               # Included content
+    - "executive_summary"
+    - "key_findings"
+    - "segment_specific_demand"
+    - "strategic_recommendations"
+  demand_comparison: true
